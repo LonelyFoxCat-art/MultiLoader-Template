@@ -25,8 +25,6 @@ pluginManagement {
         gradlePluginPortal()
         mavenCentral()
         maven("https://maven.fabricmc.net")
-        maven("https://neoforged.forgecdn.net/releases")
-        maven("https://neoforged.forgecdn.net/mojang-meta")
         maven("https://maven.neoforged.net/releases")
     }
 }
