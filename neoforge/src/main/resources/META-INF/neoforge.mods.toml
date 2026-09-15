@@ -1,0 +1,50 @@
+modLoader = "javafml" #mandatory
+loaderVersion = "${neoforge_loader_version_range}" #mandatory
+license = "${license}"
+# 26.2+ 新增：许可证文字可点击。26.1 会忽略此行
+licenseURL = "https://choosealicense.com/licenses/mit/"
+issueTrackerURL = "https://github.com/LonelyFoxCat-art/MultiLoader-Template/issues"
+displayURL = "https://github.com/LonelyFoxCat-art"
+
+[[mixins]]
+config="${mod_id}.mixins.json"
+[[mixins]]
+config="${mod_id}.neoforge.mixins.json"
+
+#[[accessTransformers]]
+#file="META-INF/accesstransformer.cfg"
+
+[[mods]] #mandatory
+modId = "${mod_id}" #mandatory
+version = "${version}" #mandatory
+displayName = "${mod_name}" #mandatory
+
+# ---- 26.2+ 图标与横幅 ----
+# iconFile：列表左侧图标，渲染为 24x24 正方形
+iconFile = "${mod_id}:icon.png"
+# iconBlur：像素风图标建议 false（硬边），照片/渐变建议 true（平滑）
+iconBlur = false
+# bannerFile：信息面板横幅，建议矩形，高度约束为 50px
+bannerFile = "${mod_id}:textures/gui/banner.png"
+
+# ---- 26.1 及更早只认 logoFile，保留作回退 ----
+# NeoForge ≥ 26.2.0.62 检测到 bannerFile/iconFile 存在时会跳过弃用警告
+logoFile = "assets/${mod_id}/icon.png" #optional
+
+credits = "${credits}" #optional
+authors = "${mod_author}" #optional
+description = '''${description}''' #mandatory
+
+[[dependencies.${mod_id}]]
+modId="neoforge"
+type="required"
+versionRange="${neoforge_version_range}"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.${mod_id}]]
+modId="minecraft"
+type="required"
+versionRange="${minecraft_version_range}"
+ordering="NONE"
+side="BOTH"

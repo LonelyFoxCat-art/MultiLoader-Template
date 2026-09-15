@@ -1,0 +1,109 @@
+# ============================================================
+#  MultiLoader-Template .editorconfig
+#  配套 .gitattributes：仓库与编辑器统一 LF，批处理保留 CRLF
+#
+#  规则优先级：自上而下，后出现的 section 覆盖先出现的
+#  （因此 [*] 基线必须在最前，*.bat 覆盖必须在其后）
+# ============================================================
+
+root = true
+
+# ---------- 全局基线 ----------
+# charset = utf-8 而非 utf-8-bom：
+# BOM 会让 gradlew 报 bad interpreter，也会污染 .properties 的首个 key
+[*]
+charset                  = utf-8
+end_of_line              = lf
+insert_final_newline     = true
+trim_trailing_whitespace = true
+indent_style             = space
+indent_size              = 4
+tab_width                = 4
+
+# ---------- Windows 脚本：必须 CRLF ----------
+# 与 .gitattributes 的 `*.bat text eol=crlf` 严格对应
+# cmd.exe 解析纯 LF 批处理会在标签跳转/括号块处静默出错
+[*.{bat,cmd}]
+end_of_line = crlf
+
+[*.ps1]
+end_of_line = crlf
+
+# ---------- JVM 源码 ----------
+[*.java]
+indent_size     = 4
+max_line_length = 120
+
+# 同时覆盖 build.gradle.kts / settings.gradle.kts /
+# BuildManager/src/main/kotlin/multiloader.*.gradle.kts
+[*.{kt,kts}]
+indent_size     = 4
+max_line_length = 120
+
+# ---------- Mod 资源（JSON / 文本数据）----------
+# Minecraft 资源文件社区惯例是 2 空格
+# max_line_length = off：长描述、长坐标不应被标尺干扰
+[*.{json,mcmeta}]
+indent_size     = 2
+max_line_length = off
+
+# *.mixins.json / *.refmap.json 已被上面的 *.json 覆盖
+
+[*.toml]
+# NeoForge / Forge mods.toml 惯例 4 空格；想改 2 空格只需动这里
+indent_size     = 4
+max_line_length = off
+
+[*.{lang,snbt}]
+indent_size     = 2
+max_line_length = off
+
+# ---------- 构建配置纯文本 ----------
+# gradle.properties / loom 配置等：扁平 key=value，不需要长度限制
+[*.properties]
+indent_size     = 4
+max_line_length = off
+
+# Fabric AccessWidener / NeoForge AccessTransformer
+[*.{accesswidener,cfg}]
+indent_size     = 4
+max_line_length = off
+
+# ---------- YAML（GitHub Actions 工作流）----------
+# 注意：YAML 里制表符是非法字符，会直接导致解析失败，不只是风格问题
+[*.{yml,yaml}]
+indent_style = space
+indent_size  = 2
+tab_width    = 2
+
+# ---------- XML ----------
+[*.xml]
+indent_size = 4
+
+# ---------- Markdown ----------
+# 行尾两个空格 = Markdown 硬换行，被 trim 掉会导致换行丢失
+# 你的 README 与中文文档大量依赖这一点，必须单独关掉
+[*.md]
+trim_trailing_whitespace = false
+max_line_length          = off
+
+# ============================================================
+#  以下为 IntelliJ IDEA 专属扩展（ij_ 前缀）
+#  其它编辑器会安全忽略，不影响跨编辑器一致性
+#  不需要可整块删除
+# ============================================================
+
+[*.{java,kt,kts}]
+# 嵌套 lambda 极多（runs{} / filesMatching{} / mods{}），
+# 默认 8 会让缩进迅速失控
+ij_continuation_indent_size = 4
+
+[*.{kt,kts}]
+ij_kotlin_code_style_defaults             = KOTLIN_OFFICIAL
+ij_kotlin_allow_trailing_comma            = true
+ij_kotlin_allow_trailing_comma_on_call_site = true
+
+[*.java]
+# 禁止折叠成 `import java.util.*;` 通配导入
+ij_java_class_count_to_use_import_on_demand = 999
+ij_java_names_count_to_use_import_on_demand = 999
